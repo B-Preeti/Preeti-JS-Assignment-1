@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 60px;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid red; 
+            max-width: 400px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .row .column {
+            width: 30%;
+        }
+        .gender-radio {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #4cae4c;
+        }
+        .donation-details {
+            background-color: plum;
+            padding: 5px;
+            border-radius: 4px;
+            margin-top: 20px;
+            color: white;
+            width: calc(100% - 20px);
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .donation-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .comment-section {
+            margin-top: 10px;
+        }
+        .public-thank-you {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .anonymous-checkbox {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -15px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Donation Form</h1>
+        <form id="donationForm" onsubmit="return validateForm()">
+            <label>Gender:</label>
+            <div class="gender-radio">
+                <div>
+                    <input type="radio" id="male" name="gender" value="male">
+                    <label for="male">Male</label>
+                </div>
+                <div>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name" name="first-name" required>
+                    <div class="error-message" id="first-name-error"></div>
+                </div>
+                <div class="column">
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="last-name" required>
+                    <div class="error-message" id="last-name-error"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="email-error"></div>
+                </div>
+                <div class="column">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone">
+                    <div class="error-message" id="phone-error"></div>
+                </div>
+            </div>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required>
+            <div class="error-message" id="address-error"></div>
+
+            <div class="row">
+                <div class="column">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required>
+                    <div class="error-message" id="city-error"></div>
+                </div>
+                <div class="column">
+                    <label for="state">State:</label>
+                    <input type="text" id="state" name="state" required>
+                    <div class="error-message" id="state-error"></div>
+                </div>
+                <div class="column">
+                    <label for="postal-code">Postal Code:</label>
+                    <input type="text" id="postal-code" name="postal-code" required>
+                    <div class="error-message" id="postal-code-error"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" name="country" required>
+                    <div class="error-message" id="country-error"></div>
+                </div>
+            </div>
+
+            <div class="donation-details">
+                <h2>Donation Details</h2>
+            </div>
+
+            <div class="donation-info">
+                <div>
+                    <label for="donation-amount">Donation Amount:</label>
+                    <input type="number" id="donation-amount" name="donation-amount" required>
+                    <div class="error-message" id="donation-amount-error"></div>
+                </div>
+                <div>
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
+                    <div class="error-message" id="date-error"></div>
+                </div>
+            </div>
+
+            <div class="comment-section">
+                <label for="donation-comments">Donation Comments:</label>
+                <input type="text" id="donation-comments" name="donation-comments">
+            </div>
+
+            <div class="public-thank-you">
+                <label>May we thank you publicly?</label>
+            </div>
+
+            <div class="anonymous-checkbox">
+                <input type="checkbox" id="anonymous" name="anonymous">
+                <label for="anonymous">No, please keep me anonymous.</label>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Donation</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+            const errorElements = document.querySelectorAll('.error-message');
+            errorElements.forEach(el => el.textContent = ''); 
+
+            const firstName = document.getElementById('first-name');
+            const lastName = document.getElementById('last-name');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const address = document.getElementById('address');
+            const city = document.getElementById('city');
+            const state = document.getElementById('state');
+            const postalCode = document.getElementById('postal-code');
+            const country = document.getElementById('country');
+            const donationAmount = document.getElementById('donation-amount');
+            const date = document.getElementById('date');
+
+    
+            if (!firstName.value) {
+                isValid = false;
+                document.getElementById('first-name-error').textContent = 'First name is required.';
+            }
+
+            if (!lastName.value) {
+                isValid = false;
+                document.getElementById('last-name-error').textContent = 'Last name is required.';
+            }
+
+            if (!email.value || !validateEmail(email.value)) {
+                isValid = false;
+                document.getElementById('email-error').textContent = 'Valid email is required.';
+            }
+
+            if (address.value.trim() === '') {
+                isValid = false;
+                document.getElementById('address-error').textContent = 'Address is required.';
+            }
+
+            if (city.value.trim() === '') {
+                isValid = false;
+                document.getElementById('city-error').textContent = 'City is required.';
+            }
+
+            if (state.value.trim() === '') {
+                isValid = false;
+                document.getElementById('state-error').textContent = 'State is required.';
+            }
+
+            if (!postalCode.value) {
+                isValid = false;
+                document.getElementById('postal-code-error').textContent = 'Postal code is required.';
+            }
+
+            if (country.value.trim() === '') {
+                isValid = false;
+                document.getElementById('country-error').textContent = 'Country is required.';
+            }
+
+            if (!donationAmount.value) {
+                isValid = false;
+                document.getElementById('donation-amount-error').textContent = 'Donation amount is required.';
+            }
+
+            if (!date.value) {
+                isValid = false;
+                document.getElementById('date-error').textContent = 'Date is required.';
+            }
+
+
+            if (isValid) {
+                saveDetails();
+                alert('Your details have been successfully stored in local storage.');
+            }
+
+            return false; 
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function saveDetails() {
+            const form = document.getElementById('donationForm');
+            const formData = {
+                firstName: form['first-name'].value,
+                lastName: form['last-name'].value,
+                email: form['email'].value,
+                phone: form['phone'].value,
+                address: form['address'].value,
+                city: form['city'].value,
+                state: form['state'].value,
+                country: form['country'].value,
+                postalCode: form['postal-code'].value,
+                gender: form['gender'].value,
+                donationAmount: form['donation-amount'].value,
+                date: form['date'].value,
+                donationComments: form['donation-comments'].value,
+                anonymous: form['anonymous'].checked,
+            };
+
+            localStorage.setItem('donationData', JSON.stringify(formData));
+        }
+
+        function populateForm() {
+            const savedData = localStorage.getItem('donationData');
+            if (savedData) {
+                const formData = JSON.parse(savedData);
+                document.getElementById('first-name').value = formData.firstName;
+                document.getElementById('last-name').value = formData.lastName;
+                document.getElementById('email').value = formData.email;
+                document.getElementById('phone').value = formData.phone;
+                document.getElementById('address').value = formData.address;
+                document.getElementById('city').value = formData.city;
+                document.getElementById('state').value = formData.state;
+                document.getElementById('country').value = formData.country;
+                document.getElementById('postal-code').value = formData.postalCode;
+                document.getElementById('donation-amount').value = formData.donationAmount;
+                document.getElementById('date').value = formData.date;
+                document.getElementById('donation-comments').value = formData.donationComments;
+
+                if (formData.anonymous) {
+                    document.getElementById('anonymous').checked = true;
+                }
+                if (formData.gender) {
+                    document.getElementById(formData.gender).checked = true;
+                }
+            }
+        }
+
+        window.onload = populateForm;
+    </script>
+</body>
+</html>
